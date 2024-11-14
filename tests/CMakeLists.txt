@@ -18,10 +18,10 @@ target_sources(
     PUBLIC sqlite.capi3_test.cpp
 )
 
-target_compile_options(
-    sqlitecppm_test
-    PUBLIC -Wall -Wextra -Wpedantic
-)
+#target_compile_options(
+#    sqlitecppm_test
+#    PUBLIC -Wall -Wextra -Wpedantic
+#)
 
 target_link_libraries(
     sqlitecppm_test

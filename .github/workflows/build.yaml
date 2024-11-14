@@ -12,21 +12,16 @@ jobs:
       fail-fast: false
       matrix:
         #os: [ubuntu-latest, macos-latest, windows-latest]
-        #config: [Debug, Release]
-        os: [ubuntu-24.04]
-        config: [Debug]
+        os: [windows-latest]
+        config: [Debug, Release]
 
     runs-on: ${{matrix.os}}
 
     steps:
     - uses: actions/checkout@v4
-    - uses: seanmiddleditch/gha-setup-ninja@v5
 
     - name: Generate build system
       run: cmake -B ${{github.workspace}}/build
-                 -G Ninja
-                 -DCMAKE_C_COMPILER=clang-18
-                 -DCMAKE_CXX_COMPILER=clang++-18
                  -DCMAKE_BUILD_TYPE:STRING=${{matrix.config}}
                  -DBUILD_SHARED_LIBS:BOOL=ON
                  -DBUILD_TESTING:BOOL=ON
