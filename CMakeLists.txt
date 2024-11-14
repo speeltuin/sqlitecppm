@@ -50,7 +50,7 @@ add_library(
 set_target_properties(
     sqlitecppm
     PROPERTIES
-        DEBUG_POSTFIX "-dbg"
+        # DEBUG_POSTFIX "-dbg"
         VERSION ${SQLitecppm_VERSION}
         SOVERSION ${SQLitecppm_VERSION}
         # This property is needed on Windows to create the import library.
