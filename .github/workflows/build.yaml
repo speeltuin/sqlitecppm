@@ -23,7 +23,7 @@ jobs:
     - name: Generate build system
       run: cmake -B ${{github.workspace}}/build
                  -DCMAKE_BUILD_TYPE:STRING=${{matrix.config}}
-                 -DBUILD_SHARED_LIBS:BOOL=ON
+                 -DBUILD_SHARED_LIBS:BOOL=OFF
                  -DBUILD_TESTING:BOOL=ON
 
     - name: Build targets
