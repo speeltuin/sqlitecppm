@@ -18,6 +18,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - uses: seanmiddleditch/gha-setup-ninja@v5
 
     - name: Generate build system
       run: cmake -B ${{github.workspace}}/build
