@@ -47,6 +47,16 @@ add_library(
     ALIAS sqlitecppm
 )
 
+set_target_properties(
+    sqlitecppm
+    PROPERTIES
+        DEBUG_POSTFIX "-dbg"
+        VERSION ${SQLitecppm_VERSION}
+        SOVERSION ${SQLitecppm_VERSION}
+        # This property is needed on Windows to create the import library.
+        WINDOWS_EXPORT_ALL_SYMBOLS ON
+)
+
 target_sources(
     sqlitecppm
     PUBLIC FILE_SET CXX_MODULES
