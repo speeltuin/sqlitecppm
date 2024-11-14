@@ -23,11 +23,12 @@ jobs:
     - name: Generate build system
       run: cmake -B ${{github.workspace}}/build
                  -G Ninja
-                 -DCMAKE_C_COMPILER=clang-18
-                 -DCMAKE_CXX_COMPILER=clang++-18
                  -DCMAKE_BUILD_TYPE:STRING=${{matrix.config}}
                  -DBUILD_SHARED_LIBS:BOOL=ON
                  -DBUILD_TESTING:BOOL=ON
+      env:
+        CC: clang-18
+        CXX: clang++-18
 
     - name: Build targets
       run: cmake --build ${{github.workspace}}/build
