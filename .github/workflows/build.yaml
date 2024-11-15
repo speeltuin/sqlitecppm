@@ -24,6 +24,9 @@ jobs:
             cc: gcc-14
             cxx: g++-14
             generator: Ninja
+          - os: windows-latest
+            config: Debug
+            shared-libs: false
 
     runs-on: ${{matrix.os}}
 
@@ -41,13 +44,13 @@ jobs:
                  -DCMAKE_C_COMPILER:STRING=${{matrix.cc}}
                  -DCMAKE_CXX_COMPILER:STRING=${{matrix.cxx}}
                  -DCMAKE_BUILD_TYPE:STRING=${{matrix.config}}
-                 -DBUILD_SHARED_LIBS:BOOL=${{matrix.shared_libs}}
+                 -DBUILD_SHARED_LIBS:BOOL=${{matrix.shared-libs}}
                  -DBUILD_TESTING:BOOL=${{matrix.testing}}
 
     - name: Generate build system (Windows)
       if: ${{matrix.os == 'windows-latest'}}
       run: cmake -B ${{github.workspace}}/build
-                 -DBUILD_SHARED_LIBS:BOOL=OFF
+                 -DBUILD_SHARED_LIBS:BOOL=${{matrix.shared-libs}}
                  -DBUILD_TESTING:BOOL=ON
 
     - name: Build targets
