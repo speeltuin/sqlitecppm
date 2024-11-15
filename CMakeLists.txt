@@ -44,21 +44,13 @@ target_sources(
             "${CMAKE_CURRENT_SOURCE_DIR}/sqlite.capi3.cppm"
 )
 
-add_executable(sqlitecppm_test sqlite.capi3_test.cpp)
-
-set_target_properties(
-    sqlitecppm_test
-    PROPERTIES
-        INSTALL_RPATH "$ORIGIN/../lib"
-)
-
-target_link_libraries(sqlitecppm_test sqlitecppm)
-
-add_test(NAME sqlitecppm_test COMMAND sqlitecppm_test)
-
 install(
     TARGETS
         sqlitecppm
     FILE_SET CXX_MODULES
         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
 )
+
+if(BUILD_TESTING)
+    add_subdirectory(tests)
+endif()
