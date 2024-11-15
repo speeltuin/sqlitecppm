@@ -11,11 +11,29 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, macos-14, windows-2022]
+        os: [ubuntu-24.04, macos-latest, windows-latest]
         config: [Debug, Release]
-        exclude:
-          - os: macos-14
-          - config: Release
+        include:
+          - os: ubuntu-24.04
+            cc: clang-18
+            cxx: clang++-18
+            generator: Ninja
+            shared-libs: true
+            testing: true
+          - os: macos-latest
+            cc: gcc-14
+            cxx: g++-14
+            generator: Ninja
+            shared-libs: true
+            testing: true
+          - os: windows-latest
+            config: Debug
+            shared-libs: false
+            testing: true
+          - os: windows-latest
+            config: Release
+            shared-libs: true
+            testing: false
 
     runs-on: ${{matrix.os}}
 
@@ -23,29 +41,31 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Install generator Ninja
-      if: ${{matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-14'}}
+      if: ${{matrix.generator == 'Ninja'}}
       uses: seanmiddleditch/gha-setup-ninja@v5
 
     - name: Generate build system (Ubuntu/macOS)
-      if: ${{matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-14'}}
+      if: ${{matrix.generator == 'Ninja'}}
       run: cmake -B ${{github.workspace}}/build
-                 -G Ninja
-                 -DCMAKE_CXX_COMPILER:STRING=g++-14
+                 -G ${{matrix.generator}}
+                 -DCMAKE_C_COMPILER:STRING=${{matrix.cc}}
+                 -DCMAKE_CXX_COMPILER:STRING=${{matrix.cxx}}
                  -DCMAKE_BUILD_TYPE:STRING=${{matrix.config}}
-                 -DBUILD_SHARED_LIBS:BOOL=ON
-                 -DBUILD_TESTING:BOOL=ON
+                 -DBUILD_SHARED_LIBS:BOOL=${{matrix.shared-libs}}
+                 -DBUILD_TESTING:BOOL=${{matrix.testing}}
 
     - name: Generate build system (Windows)
-      if: ${{matrix.os == 'windows-2022'}}
+      if: ${{matrix.os == 'windows-latest'}}
       run: cmake -B ${{github.workspace}}/build
-                 -DBUILD_SHARED_LIBS:BOOL=ON
-                 -DBUILD_TESTING:BOOL=ON
+                 -DBUILD_SHARED_LIBS:BOOL=${{matrix.shared-libs}}
+                 -DBUILD_TESTING:BOOL=${{matrix.testing}}
 
     - name: Build targets
       run: cmake --build ${{github.workspace}}/build
                  --config ${{matrix.config}}
 
     - name: Perform tests
+      if: ${{matrix.testing}}
       working-directory: ${{github.workspace}}/build
       run: ctest -C ${{matrix.config}} -V
 
