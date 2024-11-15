@@ -35,6 +35,4 @@ target_link_libraries(
         GTest::gtest_main
 )
 
-gtest_discover_tests(
-    sqlitecppm_test
-)
+add_test(NAME sqlitecppm_test COMMAND sqlitecppm_test)
