@@ -36,3 +36,12 @@ target_link_libraries(
 )
 
 add_test(NAME sqlitecppm_test COMMAND sqlitecppm_test)
+
+if(WIN32)
+    set_tests_properties(
+        sqlitecppm_test
+        PROPERTIES
+            ENVIRONMENT
+                "PATH=$<SHELL_PATH:$<TARGET_FILE_DIR:GTest::gtest_main>>$<SEMICOLON>$ENV{PATH}"
+    )
+endif()
