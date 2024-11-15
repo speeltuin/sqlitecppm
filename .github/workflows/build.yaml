@@ -13,9 +13,9 @@ jobs:
       matrix:
         os: [ubuntu-24.04, macos-latest, windows-latest]
         config: [Debug, Release]
-        ninja: true
-        shared: true
-        testing: true
+        ninja: 1
+        shared: 1
+        testing: 1
         include:
           - os: ubuntu-24.04
             cxx: clang++-18
@@ -23,12 +23,12 @@ jobs:
             cxx: g++-14
           - os: windows-latest
             config: Debug
-            ninja: false
-            shared: false
+            ninja: 0
+            shared: 0
           - os: windows-latest
             config: Release
-            ninja: false
-            testing: false
+            ninja: 0
+            testing: 0
 
     runs-on: ${{matrix.os}}
 
