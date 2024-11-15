@@ -13,22 +13,6 @@ jobs:
       matrix:
         os: [ubuntu-24.04, macos-latest, windows-latest]
         config: [Debug, Release]
-        ninja: 1
-        shared: 1
-        testing: 1
-        include:
-          - os: ubuntu-24.04
-            cxx: clang++-18
-          - os: macos-latest
-            cxx: g++-14
-          - os: windows-latest
-            config: Debug
-            ninja: 0
-            shared: 0
-          - os: windows-latest
-            config: Release
-            ninja: 0
-            testing: 0
 
     runs-on: ${{matrix.os}}
 
@@ -45,21 +29,20 @@ jobs:
                  -G Ninja
                  -DCMAKE_CXX_COMPILER:STRING=${{matrix.cxx}}
                  -DCMAKE_BUILD_TYPE:STRING=${{matrix.config}}
-                 -DBUILD_SHARED_LIBS:BOOL=${{matrix.shared}}
-                 -DBUILD_TESTING:BOOL=${{matrix.testing}}
+                 -DBUILD_SHARED_LIBS:BOOL=OFF
+                 -DBUILD_TESTING:BOOL=ON
 
     - name: Generate build system (Windows)
       if: ${{matrix.os == 'windows-latest'}}
       run: cmake -B ${{github.workspace}}/build
-                 -DBUILD_SHARED_LIBS:BOOL=${{matrix.shared}}
-                 -DBUILD_TESTING:BOOL=${{matrix.testing}}
+                 -DBUILD_SHARED_LIBS:BOOL=OFF
+                 -DBUILD_TESTING:BOOL=ON
 
     - name: Build targets
       run: cmake --build ${{github.workspace}}/build
                  --config ${{matrix.config}}
 
     - name: Perform tests
-      if: ${{matrix.testing}}
       working-directory: ${{github.workspace}}/build
       run: ctest -C ${{matrix.config}} -V
 
