@@ -1,8 +1,8 @@
-#include <iostream>
+#include "gtest/gtest.h"
 
 import speech;
 
-int main()
+TEST(SQLitecppmTest, True)
 {
-    std::cout << get_phrase() << std::endl;
+    EXPECT_STREQ(get_phrase(), "Hello, world!");
 }
