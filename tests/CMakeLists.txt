@@ -32,7 +32,7 @@ target_link_libraries(
     sqlitecppm_test
     PRIVATE
         SQLitecppm::sqlitecppm
-        #GTest::gtest_main
+        GTest::gtest_main
 )
 
 add_test(NAME sqlitecppm_test COMMAND sqlitecppm_test)
