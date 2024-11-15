@@ -33,7 +33,7 @@ jobs:
           - os: windows-latest
             config: Release
             shared-libs: true
-            testing: false
+            testing: true
 
     runs-on: ${{matrix.os}}
 
