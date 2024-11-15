@@ -12,7 +12,7 @@ project(
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
-#include(CodeCoverage)
+include(CodeCoverage)
 include(FetchContent)
 include(GNUInstallDirs)
 include(CTest)

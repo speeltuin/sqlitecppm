@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include <cstring>
 
-import speech;
+import sqlite.capi3;
 
 TEST(SQLitecppmTest, True)
 {
