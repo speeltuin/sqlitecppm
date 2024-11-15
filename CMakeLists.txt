@@ -1,6 +1,19 @@
-cmake_minimum_required(VERSION 3.28)
-project(hello VERSION 0.1.0 LANGUAGES CXX)
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2024 AlgorIT Software Consultancy, the Netherlands
 
+cmake_minimum_required(VERSION 3.28)
+
+project(
+    SQLitecppm
+    VERSION 0.1.0
+    DESCRIPTION "SQLite C++ Module"
+    LANGUAGES CXX
+)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+
+#include(CodeCoverage)
+#include(FetchContent)
 include(GNUInstallDirs)
 include(CTest)
 
@@ -9,41 +22,46 @@ set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_SCAN_FOR_MODULES ON)
 
-add_library(speech)
+add_library(sqlitecppm)
+add_library(SQLitecppm::sqlitecppm
+    ALIAS sqlitecppm
+)
 
 target_sources(
-    speech
+    sqlitecppm
     PUBLIC FILE_SET CXX_MODULES
+        BASE_DIRS
+            "${CMAKE_CURRENT_SOURCE_DIR}"
         FILES
-            speech.cppm
-            speech_english.cppm
-            speech_spanish.cppm
+            "${CMAKE_CURRENT_SOURCE_DIR}/speech.cppm"
+            "${CMAKE_CURRENT_SOURCE_DIR}/speech_english.cppm"
+            "${CMAKE_CURRENT_SOURCE_DIR}/speech_spanish.cppm"
 )
 
 set_target_properties(
-    speech
+    sqlitecppm
     PROPERTIES
         VERSION ${hello_VERSION}
         SOVERSION ${hello_VERSION}
         WINDOWS_EXPORT_ALL_SYMBOLS ON
 )
 
-add_executable(hello hello.cpp)
+add_executable(sqlitecppm_test hello.cpp)
 
 set_target_properties(
-    hello
+    sqlitecppm_test
     PROPERTIES
         INSTALL_RPATH "$ORIGIN/../lib"
 )
 
-target_link_libraries(hello speech)
+target_link_libraries(sqlitecppm_test sqlitecppm)
 
-add_test(NAME hello COMMAND hello)
+add_test(NAME sqlitecppm_test COMMAND sqlitecppm_test)
 
 install(
     TARGETS
-        speech
-        hello
+        sqlitecppm
+        sqlitecppm_test
     FILE_SET CXX_MODULES
         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
 )
