@@ -27,26 +27,24 @@ add_library(SQLitecppm::sqlitecppm
     ALIAS sqlitecppm
 )
 
+set_target_properties(
+    sqlitecppm
+    PROPERTIES
+        VERSION ${SQLitecppm_VERSION}
+        SOVERSION ${SQLitecppm_VERSION}
+        WINDOWS_EXPORT_ALL_SYMBOLS ON
+)
+
 target_sources(
     sqlitecppm
     PUBLIC FILE_SET CXX_MODULES
         BASE_DIRS
             "${CMAKE_CURRENT_SOURCE_DIR}"
         FILES
-            "${CMAKE_CURRENT_SOURCE_DIR}/speech.cppm"
-            "${CMAKE_CURRENT_SOURCE_DIR}/speech_english.cppm"
-            "${CMAKE_CURRENT_SOURCE_DIR}/speech_spanish.cppm"
+            "${CMAKE_CURRENT_SOURCE_DIR}/sqlite.capi3.cppm"
 )
 
-set_target_properties(
-    sqlitecppm
-    PROPERTIES
-        VERSION ${hello_VERSION}
-        SOVERSION ${hello_VERSION}
-        WINDOWS_EXPORT_ALL_SYMBOLS ON
-)
-
-add_executable(sqlitecppm_test hello.cpp)
+add_executable(sqlitecppm_test sqlite.capi3_test.cpp)
 
 set_target_properties(
     sqlitecppm_test
@@ -61,7 +59,6 @@ add_test(NAME sqlitecppm_test COMMAND sqlitecppm_test)
 install(
     TARGETS
         sqlitecppm
-        sqlitecppm_test
     FILE_SET CXX_MODULES
         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
 )
