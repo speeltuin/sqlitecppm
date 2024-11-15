@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2024 AlgorIT Software Consultancy, the Netherlands
 
+#[==[
 option(BUILD_GMOCK "" OFF)
 option(INSTALL_GTEST "" OFF)
 FetchContent_Declare(
@@ -11,6 +12,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 include(GoogleTest)
+]==]
 
 add_executable(sqlitecppm_test)
 
@@ -33,7 +35,8 @@ target_sources(
 target_link_libraries(
     sqlitecppm_test
     PUBLIC SQLitecppm::sqlitecppm
-    PUBLIC GTest::gtest_main
+    #PUBLIC GTest::gtest_main
 )
 
-gtest_discover_tests(sqlitecppm_test)
+#gtest_discover_tests(sqlitecppm_test)
+add_test(NAME sqlitecppm_test COMMAND sqlitecppm_test)

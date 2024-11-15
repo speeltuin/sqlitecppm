@@ -22,6 +22,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_SCAN_FOR_MODULES ON)
 
+#[==[
+Don't forget SQLitecppmConfig.cmake.in
+
 option(SQLITE_BUILD_SHELL "" OFF)
 FetchContent_Declare(
     sqlite-amalgamation
@@ -40,6 +43,7 @@ set(SQLITE_ENABLE_COLUMN_METADATA ON INTERNAL "")
 set(SQLITE_OMIT_SHARED_CACHE ON INTERNAL "")
 set(SQLITE_USE_ALLOCA ON INTERNAL "")
 FetchContent_MakeAvailable(sqlite-amalgamation)
+]==]
 
 add_library(sqlitecppm)
 add_library(
@@ -77,10 +81,12 @@ target_compile_features(
     PUBLIC cxx_std_20
 )
 
+#[==[
 target_link_libraries(
     sqlitecppm
     PUBLIC SQLite::SQLite3
 )
+]==]
 
 if(BUILD_TESTING)
     add_subdirectory(tests)
