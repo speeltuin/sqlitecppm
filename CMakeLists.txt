@@ -75,6 +75,11 @@ target_compile_features(
     PUBLIC cxx_std_20
 )
 
+target_link_libraries(
+    sqlitecppm
+    PUBLIC SQLite::SQLite3
+)
+
 if(BUILD_TESTING)
     add_subdirectory(tests)
 endif()

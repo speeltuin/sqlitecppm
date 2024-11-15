@@ -1,8 +1,10 @@
 module;
 
+#include "sqlite3.h"
+
 export module sqlite.capi3;
 
-export constexpr char const * get_phrase() noexcept
+export [[nodiscard]] const char* libversion() noexcept
 {
-    return "Hello, world!";
+    return ::sqlite3_libversion();
 }

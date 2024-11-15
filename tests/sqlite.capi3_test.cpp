@@ -3,7 +3,7 @@
 
 import sqlite.capi3;
 
-TEST(SQLitecppmTest, True)
+TEST(SQLitecppmTest, LibVersion)
 {
-    EXPECT_STREQ(get_phrase(), "Hello, world!");
+    EXPECT_STREQ(libversion(), "3.47.0");
 }
