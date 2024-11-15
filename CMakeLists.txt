@@ -39,9 +39,9 @@ target_sources(
     sqlitecppm
     PUBLIC FILE_SET CXX_MODULES
         BASE_DIRS
-            "${CMAKE_CURRENT_SOURCE_DIR}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/include"
         FILES
-            "${CMAKE_CURRENT_SOURCE_DIR}/sqlite.capi3.cppm"
+            "${CMAKE_CURRENT_SOURCE_DIR}/include/sqlite/sqlite.capi3.cppm"
 )
 
 install(
