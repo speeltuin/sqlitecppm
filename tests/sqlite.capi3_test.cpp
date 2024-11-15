@@ -1,8 +1,14 @@
-#include "gtest/gtest.h"
+//#include "gtest/gtest.h"
+#include <cstring>
 
 import speech;
 
-TEST(SQLitecppmTest, True)
+// TEST(SQLitecppmTest, True)
+// {
+//     EXPECT_STREQ(get_phrase(), "Hello, world!");
+// }
+
+int main()
 {
-    EXPECT_STREQ(get_phrase(), "Hello, world!");
+    return (std::strcmp(get_phrase(), "Hello, world!") != 0);
 }
