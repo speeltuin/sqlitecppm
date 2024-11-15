@@ -47,6 +47,14 @@ add_library(
     ALIAS sqlitecppm
 )
 
+set_target_properties(
+    sqlitecppm
+    PROPERTIES
+        VERSION ${SQLitecppm_VERSION}
+        SOVERSION ${SQLitecppm_VERSION}
+        WINDOWS_EXPORT_ALL_SYMBOLS ON
+)
+
 target_sources(
     sqlitecppm
     PUBLIC FILE_SET CXX_MODULES

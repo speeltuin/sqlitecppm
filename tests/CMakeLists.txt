@@ -13,20 +13,30 @@ include(GoogleTest)
 
 add_executable(sqlitecppm_test)
 
-target_sources(
+set_target_properties(
     sqlitecppm_test
-    PUBLIC sqlite.capi3_test.cpp
+    PROPERTIES
+        INSTALL_RPATH "$ORIGIN/../lib"
 )
 
+target_sources(
+    sqlitecppm_test
+    PUBLIC
+        sqlite.capi3_test.cpp
+)
+
+#[[
 target_compile_options(
     sqlitecppm_test
     PUBLIC -Wall -Wextra -Wpedantic
 )
+]]
 
 target_link_libraries(
     sqlitecppm_test
-    PUBLIC SQLitecppm::sqlitecppm
-    PUBLIC GTest::gtest_main
+    PUBLIC
+        SQLitecppm::sqlitecppm
+        GTest::gtest_main
 )
 
 gtest_discover_tests(sqlitecppm_test)
